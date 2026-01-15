@@ -1,5 +1,5 @@
 import streamlit as st
-from db import criar_tabelas
+from db import criar_tabelas, criar_admin_padrao
 from auth import login
 from cadastro import tela_cadastro
 from faturas import tela_faturas
@@ -10,6 +10,7 @@ from fluxo_caixa import tela_fluxo_caixa
 st.set_page_config(page_title="Sistema Financeiro", layout="wide")
 
 criar_tabelas()
+criar_admin_padrao()
 
 if "logado" not in st.session_state:
     login()
@@ -29,4 +30,5 @@ else:
         tela_faturas("Cliente")
     elif menu == "Fluxo de Caixa":
         tela_fluxo_caixa()
+
 
