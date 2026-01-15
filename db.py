@@ -1,6 +1,7 @@
 import os
 import sqlite3
 from datetime import date
+import hashlib
 
 DB_PATH = os.path.join(os.getcwd(), "database.db")
 
@@ -45,6 +46,20 @@ def criar_tabelas():
         perfil TEXT
     )
     """)
+
+    con.commit()
+    con.close()
+
+def criar_admin_padrao():
+    con = conectar()
+    cur = con.cursor()
+
+    senha_hash = hashlib.sha256("123".encode()).hexdigest()
+
+    cur.execute("""
+        INSERT OR IGNORE INTO usuarios (usuario, senha, perfil)
+        VALUES (?, ?, ?)
+    """, ("admin", senha_hash, "admin"))
 
     con.commit()
     con.close()
