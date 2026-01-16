@@ -3,7 +3,7 @@ import pandas as pd
 from db import conectar
 
 def tela_cadastro():
-    st.subheader("👥 Cadastro de Clientes e Fornecedores")
+    st.subheader("👥 Cadastro de Clientes, Fornecedores e Funcionários")
 
     con = conectar()
     df = pd.read_sql("SELECT * FROM pessoas", con)
@@ -23,7 +23,7 @@ def tela_cadastro():
             documento = st.text_input("Documento", pessoa["documento"])
             email = st.text_input("Email", pessoa["email"])
             telefone = st.text_input("Telefone", pessoa["telefone"])
-            endereço = st.text_input("Endereço", pessoa["endereço"])
+            endereco = st.text_input("Endereço", pessoa["endereco"])
             ativo = st.checkbox("Ativo", value=bool(pessoa["ativo"]))
         else:
             tipo = st.selectbox("Tipo", ["Cliente", "Fornecedor"])
@@ -31,7 +31,7 @@ def tela_cadastro():
             documento = st.text_input("Documento")
             email = st.text_input("Email")
             telefone = st.text_input("Telefone")
-            endereço = st.text_input("Endereço")
+            endereco = st.text_input("Endereco")
             ativo = st.checkbox("Ativo", value=True)
 
         salvar = st.form_submit_button("💾 Salvar")
@@ -40,16 +40,16 @@ def tela_cadastro():
         cur = con.cursor()
         if id_edicao == "Novo":
             cur.execute("""
-                INSERT INTO pessoas (tipo, nome, documento, email, telefone, endereço, ativo)
+                INSERT INTO pessoas (tipo, nome, documento, email, telefone, endereco, ativo)
                 VALUES (?,?,?,?,?,?,?)
-            """, (tipo, nome, documento, email, telefone, endereço, int(ativo)))
+            """, (tipo, nome, documento, email, telefone, endereco, int(ativo)))
             st.success("Cadastro criado com sucesso")
         else:
             cur.execute("""
                 UPDATE pessoas
-                SET tipo=?, nome=?, documento=?, email=?, telefone=?, ativo=?, endereço=?
+                SET tipo=?, nome=?, documento=?, email=?, telefone=?, ativo=?, endereco=?
                 WHERE id=?
-            """, (tipo, nome, documento, email, telefone, edereço, int(ativo), int(id_edicao)))
+            """, (tipo, nome, documento, email, telefone, endereco, int(ativo), int(id_edicao)))
             st.success("Cadastro atualizado com sucesso")
 
         con.commit()
@@ -60,4 +60,5 @@ def tela_cadastro():
     st.dataframe(df, use_container_width=True)
 
     con.close()
+
 
