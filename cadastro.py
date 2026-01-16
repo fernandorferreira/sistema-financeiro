@@ -23,7 +23,7 @@ def tela_cadastro():
             documento = st.text_input("Documento", pessoa["documento"])
             email = st.text_input("Email", pessoa["email"])
             telefone = st.text_input("Telefone", pessoa["telefone"])
-            endereco = st.text_input("Endereço", pessoa["endereco"])
+            endereco = st.text_input("Endereco", pessoa["endereco"])
             ativo = st.checkbox("Ativo", value=bool(pessoa["ativo"]))
         else:
             tipo = st.selectbox("Tipo", ["Cliente", "Fornecedor"])
@@ -60,5 +60,6 @@ def tela_cadastro():
     st.dataframe(df, use_container_width=True)
 
     con.close()
+
 
 
